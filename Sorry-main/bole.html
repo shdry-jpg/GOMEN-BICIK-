@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>bicik gayung minta maap🙁</title>
+
+<style>
+
+body{
+background:linear-gradient(#ffd6e7,#fff0f5);
+font-family:sans-serif;
+text-align:center;
+overflow:hidden;
+margin:0;
+height:100vh;
+position:relative;
+}
+
+h1{
+margin-top:120px;
+font-size:48px;
+color:#ff3b6b;
+position:relative;
+z-index:2;
+}
+
+#text{
+font-size:26px;
+margin-top:20px;
+padding:20px;
+position:relative;
+z-index:2;
+}
+
+button{
+font-size:22px;
+padding:10px 25px;
+border:none;
+border-radius:10px;
+margin:10px;
+cursor:pointer;
+position:relative;
+z-index:2;
+}
+
+#yes{
+background:#4CAF50;
+color:white;
+}
+
+#no{
+background:#ff4d4d;
+color:white;
+position:relative;
+z-index:2;
+}
+
+.falling{
+position:fixed;
+top:-50px;
+font-size:24px;
+pointer-events:none;
+z-index:1;
+animation-name:fall;
+animation-timing-function:linear;
+animation-iteration-count:infinite;
+}
+
+@keyframes fall{
+0%{
+transform:translateY(0) rotate(0deg);
+opacity:1;
+}
+100%{
+transform:translateY(110vh) rotate(360deg);
+opacity:0.8;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>maafkan aku sayangg❤️</h1>
+
+<div id="text"></div>
+
+<button id="yes" onclick="love()">bicik memaafkan💖</button>
+<button id="no">bicik tidak memaafkan🙁</button>
+
+<br><br>
+
+<audio id="bgAudio" autoplay loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const message="Bicik sangat berarti bagi aku, apakah aku diberikan kesempatan lagi🥺";
+
+let i=0;
+
+function typing(){
+if(i<message.length){
+document.getElementById("text").innerHTML+=message.charAt(i);
+i++;
+setTimeout(typing,70);
+}
+}
+
+typing();
+
+const noBtn=document.getElementById("no");
+let noBtnEscaped=false;
+
+document.addEventListener("mousemove",function(e){
+const rect=noBtn.getBoundingClientRect();
+const btnCenterX=rect.left+rect.width/2;
+const btnCenterY=rect.top+rect.height/2;
+
+const dist=Math.hypot(e.clientX-btnCenterX,e.clientY-btnCenterY);
+
+if(dist<100){
+if(!noBtnEscaped){
+noBtn.style.position="fixed";
+noBtnEscaped=true;
+}
+const x=Math.random()*(window.innerWidth-rect.width);
+const y=Math.random()*(window.innerHeight-rect.height);
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+}
+});
+
+function love(){
+alert("Terima kasih bcik. Loveu moree. ❤️");
+}
+
+const audio=document.getElementById("bgAudio");
+
+audio.play().catch(()=>{
+document.body.addEventListener("click",function(){
+audio.play();
+},{once:true});
+});
+
+const symbols=["🌸","🌺","🌼","🌷","💖","💕","💗","❤️"];
+
+function createFalling(){
+const el=document.createElement("div");
+el.classList.add("falling");
+el.innerText=symbols[Math.floor(Math.random()*symbols.length)];
+el.style.left=Math.random()*window.innerWidth+"px";
+el.style.animationDuration=(Math.random()*4+4)+"s";
+el.style.fontSize=(Math.random()*15+15)+"px";
+document.body.appendChild(el);
+
+setTimeout(()=>{
+el.remove();
+},9000);
+}
+
+setInterval(createFalling,800);
+
+</script>
+
+</body>
+</html>
